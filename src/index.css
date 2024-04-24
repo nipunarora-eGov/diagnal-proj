@@ -6,7 +6,7 @@
 
 body {
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #171717;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -15,9 +15,24 @@ body {
   position: sticky;
   top: 0;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.844);
+  /* background-color: rgba(0, 0, 0, 0.844); */
+  background-color: #171717;
   padding: 2rem 0;
   backdrop-filter: blur(10px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.search-icon {
+  cursor: pointer;
+}
+.back-button {
+  cursor: pointer;
 }
 
 .grid-container {

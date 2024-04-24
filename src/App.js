@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader } from './components/Loader';
 import { Card } from './components/Card';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Header from './components/Header';
 
 const fetchFn = (page) => {
   return fetch(`https://test.create.diagnal.com/data/page${page}.json`).then(
@@ -10,7 +11,12 @@ const fetchFn = (page) => {
   );
 };
 
-function App() {
+
+const App = () => {
+
+  const [cardData,setCardData] = useState([])
+  const [filteredData,setFilteredData] = useState([])
+  const [query,setQuery] = useState("")
   const { data, error, fetchNextPage, status, hasNextPage } = useInfiniteQuery(
     ['diagnal-images'],
 
@@ -38,17 +44,45 @@ function App() {
     }
   );
 
-  const imageData = useMemo(
-    () =>{
+  useEffect(() => {
+    if(data){
       const finalResult = []
       data?.pages.forEach((page,idx,arr) => {
         finalResult.push(...page.page['content-items'].content)
       })
-      return finalResult
-    },
-    [data]
-  );
-debugger
+      setCardData(()=>finalResult)
+      // setFilteredData(()=>finalResult)
+    }
+  }, [data])
+  
+  const filterData = (searchInput, key) => {
+    if(searchInput==="") return
+    // Convert search input to lowercase for case-insensitive matching
+    const searchTerm = searchInput.toLowerCase();
+    
+    // Filter the data array based on the search input
+    const filteredData = cardData.filter(item => {
+      // Convert the value of the specified key to lowercase for comparison
+      const itemValue = item[key].toString().toLowerCase();
+      
+      // Check if the item value contains the search term
+      return itemValue.includes(searchTerm);
+    });
+    setFilteredData(filteredData)
+  }
+  
+
+  useEffect(() => {
+    filterData(query,"name")
+  }, [query,data])
+
+  const onBackButtonClick = (e) => {
+    console.log(e.target.value);
+  }
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value,"name")
+  }
   //loading state
   if (status === 'loading') return <Loader />;
 
@@ -57,29 +91,21 @@ debugger
 
   return (
     <div>
-      <h1 className="title">Diagnal Scroll</h1>
-
-      {/* <div className="grid-container">
-        {
-          data && data?.pages[0].page?.["content-items"].content.map((card,idx,arr) => (
-            <Card key={idx} cardData={{...card,imageUrl:`https://test.create.diagnal.com/images/${card?.['poster-image']}`}} />
-          ))
-        }
-      </div> */}
-
-      <InfiniteScroll
-        dataLength={imageData ? imageData.length : 0}
+      {/* <h1 className="title">Diagnal Scroll</h1> */}
+      <Header onBackButtonClick={onBackButtonClick} handleInputChange={handleInputChange} />
+      {cardData?.length > 0 && <InfiniteScroll
+        dataLength={cardData ? cardData.length : 0}
         next={() => fetchNextPage()}
         hasMore={!!hasNextPage}
         loader={<Loader />}
       >
         <div className="grid-container">
-          {imageData &&
-            imageData.map((card,idx,arr) => (
+          {cardData &&
+            cardData.map((card,idx,arr) => (
               <Card key={idx} cardData={{...card,imageUrl:`https://test.create.diagnal.com/images/${card?.['poster-image']}`}}/>
             ))}
         </div>
-      </InfiniteScroll>
+      </InfiniteScroll>}
     </div>
   );
 }
