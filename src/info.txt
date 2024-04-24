@@ -1,0 +1,50 @@
+What we evaluate with this project.
+
+
+With this ReactJS workshop project, we will be assessing the following aspects:
+
+Implementation of pixel-perfect design: We will evaluate your proficiency in developing features that closely match the provided design.
+Code structure and adherence to best practices: Your code will be assessed to determine your understanding of organizing and structuring code in a way that follows industry best practices.
+Proficiency in ReactJS concepts: We will evaluate your understanding and usage of core ReactJS concepts such as components, state, props, lifecycle methods, and hooks.
+Handling of edge cases: We will examine your ability to handle various edge cases that may arise within a feature, showcasing your problem-solving skills.
+Website hosting and monitoring: You will be expected to demonstrate your capability to host a website and effectively monitor its usage, showcasing your skills in deployment and monitoring tools.
+Effective communication of feature releases: Your aptitude for communicating feature releases to customers in a clear and effective manner will be assessed.
+Handling data flow: We will assess your ability to manage data flow within a ReactJS application, including handling state management libraries (e.g., Redux, MobX, Context APIs) and implementing data fetching and updating mechanisms.
+Performance optimization: We will assess your knowledge and application of performance optimization techniques in ReactJS, including code splitting, lazy loading, memoization, and reducing unnecessary re-renders.
+Integration with backend APIs: We will evaluate your ability to integrate ReactJS with backend APIs, making API calls, handling responses, and managing asynchronous operations using libraries like Axios or the built-in Fetch API.
+
+
+Requirements
+Develop the mobile browser version of Content Listing page as per the design given in the Design Requirements section below, using ReactJS. You can use any prebuilt react UI component / frameworks that you think are going to help speed up the development process.
+
+
+
+Design Requirements
+Your output must closely align with the design provided below.
+Implementation is required only for the mobile portrait view, and there is no need to consider desktop or landscape dimensions.
+The Grid component should always show three columns, even paddings, ensuring responsive behavior on various mobile resolutions.
+There should be no visible scroll bars.
+In cases where specific instructions are not provided in the design, make informed decisions on placement and sizing.
+
+
+
+Global Font : Titillium Web (https://fonts.google.com/specimen/Titillium+Web)
+Thumbnail Aspect Ratio : 2:3
+Background Color : #171717
+Text Color : #FFFFFF
+
+
+Functional Requirements
+The listing grid should have vertical scrolling enabled while restricting horizontal scrolling.
+App must implement lazy loading of contents - image grid must load gradually as the user scrolls down. Data for the first page can be loaded during app load.
+Client Side Search must be implemented by filtering the data that is already loaded in the UI (not by calling any API). Search results must be rendered on to the main view itself without refreshing/reloading the page or taking the user to a new page
+
+Technical Details
+Base API URL : https://test.create.diagnal.com/
+Data API Pages	: /data/ [Example: https://test.create.diagnal.com/data/page1.json]
+Images API : /images/ [Example: https://test.create.diagnal.com/images/poster1.jpg]
+
+
+The Images API has all the images that should be used for this test. This includes poster images which are referenced to in the Data API discussed below and the UI images like back button, search button etc. You can access a list of all the images from the following URL: https://test.create.diagnal.com/index.html
+The Data API has a few JSON files with naming page(#NUM).json. These are to be used as mock data for the grid (including specifying titles and poster images to be displayed). You will need to retrieve the data, one JSON page at a time as the user scrolls down in the Grid. Do not fetch all JSON pages at once, they should be loaded as the user navigates and approaches the end of the current data set. This lazy loading should be done in a seamless way without the user noticing that additional data is loading (no pausing of scroll or blocking loaders during scroll).
+Two content items on Page 3 have edge cases which you will need to think creatively on how to solve without breaking the UI consistency.
