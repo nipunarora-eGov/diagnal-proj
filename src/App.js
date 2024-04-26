@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Loader } from './components/Loader';
 import { Card } from './components/Card';
@@ -70,7 +70,7 @@ const App = () => {
   };
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value, 'name');
+    setQuery(e.target.value);
   };
   //loading state
   if (status === 'loading') return <Loader />;

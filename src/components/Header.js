@@ -72,8 +72,8 @@ const Header = ({
               handleInputChange(e);
             }}
             onBlur={handleBlur}
-            min={0} 
-            max={20} 
+            minLength={0} 
+            maxLength={20} 
           />
         </div>
 
