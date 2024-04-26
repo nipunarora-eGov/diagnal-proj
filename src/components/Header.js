@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSearch,faChevronLeft,faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ onBackButtonClick, handleInputChange }) => {
+const Header = ({ onBackButtonClick, handleInputChange,defaultText }) => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchInputRef = useRef(null);
 
@@ -18,15 +18,15 @@ const Header = ({ onBackButtonClick, handleInputChange }) => {
   return (
     <div className="header title">
       {/* Back Button */}
-      <button className="back-button" onClick={onBackButtonClick}>
+      <div className='back-button'>
         <FontAwesomeIcon icon={faArrowLeft} />
-      </button>
+      </div>
 
       {/* Search Input */}
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder={defaultText}
           ref={searchInputRef}
           className={`search-input ${isSearchFocused ? 'focused' : ''}`}
           onChange={handleInputChange}

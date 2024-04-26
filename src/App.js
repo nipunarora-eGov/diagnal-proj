@@ -11,12 +11,11 @@ const fetchFn = (page) => {
   );
 };
 
-
 const App = () => {
-
-  const [cardData,setCardData] = useState([])
-  const [filteredData,setFilteredData] = useState([])
-  const [query,setQuery] = useState("")
+  const [cardData, setCardData] = useState([]);
+  const [query, setQuery] = useState('');
+  const [title, setTitle] = useState('Search...');
+  console.log(query);
   const { data, error, fetchNextPage, status, hasNextPage } = useInfiniteQuery(
     ['diagnal-images'],
 
@@ -28,14 +27,19 @@ const App = () => {
         //if data is available to fetch for next page then return pageParam
         //otherwise return false so that it doesn't make another api call
 
-        const requestedPage = lastPage?.page?.['page-num-requested'];
-        const pageSizeRequested = lastPage?.page?.['page-size-requested'];
-        const pageSizeReturned = lastPage?.page?.['page-size-returned'];
-        const totalCount = lastPage?.page?.['total-content-items'];
+        const requestedPage = parseInt(lastPage?.page?.['page-num-requested']);
+        const pageSizeRequested = parseInt(
+          lastPage?.page?.['page-size-requested']
+        );
+        const pageSizeReturned = parseInt(
+          lastPage?.page?.['page-size-returned']
+        );
+        const totalCount = parseInt(lastPage?.page?.['total-content-items']);
 
         //we can calculate the total no of pages and current page then compare both
         const totalPages = parseInt(Math.ceil(totalCount / pageSizeRequested));
-        if (requestedPage < totalPages) return parseInt(requestedPage) + 1;
+        if (requestedPage < totalPages) return requestedPage + 1;
+
         return false;
       },
       select: (data) => {
@@ -45,44 +49,30 @@ const App = () => {
   );
 
   useEffect(() => {
-    if(data){
-      const finalResult = []
-      data?.pages.forEach((page,idx,arr) => {
-        finalResult.push(...page.page['content-items'].content)
-      })
-      setCardData(()=>finalResult)
+    if (data) {
+      setTitle(data?.pages?.[0]?.page?.title);
+      const finalResult = [];
+      data?.pages.forEach((page, idx, arr) => {
+        finalResult.push(...page.page['content-items'].content);
+      });
+      setCardData(() => finalResult);
       // setFilteredData(()=>finalResult)
     }
-  }, [data])
-  
-  const filterData = (searchInput, key) => {
-    if(searchInput==="") return
-    // Convert search input to lowercase for case-insensitive matching
-    const searchTerm = searchInput.toLowerCase();
-    
-    // Filter the data array based on the search input
-    const filteredData = cardData.filter(item => {
-      // Convert the value of the specified key to lowercase for comparison
-      const itemValue = item[key].toString().toLowerCase();
-      
-      // Check if the item value contains the search term
-      return itemValue.includes(searchTerm);
-    });
-    setFilteredData(filteredData)
-  }
-  
+  }, [data]);
 
-  useEffect(() => {
-    filterData(query,"name")
-  }, [query,data])
+  const filterData = (card) => {
+    const searchTerm = query.toLowerCase();
+    const itemValue = card.name.toLowerCase();
+    return itemValue.includes(searchTerm);
+  };
 
   const onBackButtonClick = (e) => {
     console.log(e.target.value);
-  }
+  };
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value,"name")
-  }
+    setQuery(e.target.value, 'name');
+  };
   //loading state
   if (status === 'loading') return <Loader />;
 
@@ -90,24 +80,44 @@ const App = () => {
   if (status === 'error') return <h4>Ups!, {`${error}`}</h4>;
 
   return (
-    <div>
-      {/* <h1 className="title">Diagnal Scroll</h1> */}
-      <Header onBackButtonClick={onBackButtonClick} handleInputChange={handleInputChange} />
-      {cardData?.length > 0 && <InfiniteScroll
-        dataLength={cardData ? cardData.length : 0}
-        next={() => fetchNextPage()}
-        hasMore={!!hasNextPage}
-        loader={<Loader />}
-      >
-        <div className="grid-container">
-          {cardData &&
-            cardData.map((card,idx,arr) => (
-              <Card key={idx} cardData={{...card,imageUrl:`https://test.create.diagnal.com/images/${card?.['poster-image']}`}}/>
-            ))}
-        </div>
-      </InfiniteScroll>}
+    <div className='titillium-web-regular'>
+      <Header
+        onBackButtonClick={onBackButtonClick}
+        handleInputChange={handleInputChange}
+        defaultText={title}
+      />
+
+      <div className="infinite-scroll-container">
+        {/* <h1 className="title">Diagnal Scroll</h1> */}
+        {cardData?.length > 0 && (
+          <InfiniteScroll
+            dataLength={
+              cardData ? cardData.filter((card) => filterData(card)).length : 0
+            }
+            next={() => fetchNextPage()}
+            hasMore={!!hasNextPage}
+            loader={<Loader />}
+            scrollThreshold={0.5}
+          >
+            <div className="grid-container">
+              {cardData &&
+                cardData
+                  .filter((card) => filterData(card))
+                  .map((card, idx, arr) => (
+                    <Card
+                      key={idx}
+                      cardData={{
+                        ...card,
+                        imageUrl: `https://test.create.diagnal.com/images/${card?.['poster-image']}`,
+                      }}
+                    />
+                  ))}
+            </div>
+          </InfiniteScroll>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
