@@ -26,11 +26,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 2rem 0rem 2rem;
   /* font-family: titillium-web-extralight;   */
 }
-
-
 
 .search-icon {
   cursor: pointer;
@@ -41,7 +39,7 @@ body {
   height: 3rem;
   padding: 0.5rem 1rem 0rem 0rem;
 
-  svg{
+  svg {
     height: 2rem;
   }
 }
@@ -80,7 +78,7 @@ body {
   transform: translateY(-10px); /* Elevate the card on hover by moving it up */
 }
 
-.card>img {
+.card > img {
   width: 100%;
   min-height: 150px;
   height: 100%;
@@ -88,13 +86,12 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-.card>p {
+.card > p {
   flex: 1;
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
 }
-
 
 @keyframes fadeInMove {
   0% {
@@ -116,7 +113,6 @@ body {
   }
 }
 
-
 /* SPINNER */
 
 /* From uiverse.io by @EmmaxPlay */
@@ -129,7 +125,7 @@ body {
   margin: 5rem 0;
 }
 
-.container-loading>span {
+.container-loading > span {
   font-size: 1.2rem;
 }
 
@@ -142,7 +138,7 @@ body {
 
 .spinner::before,
 .spinner:after {
-  content: "";
+  content: '';
   position: absolute;
   border-radius: inherit;
 }
@@ -151,7 +147,7 @@ body {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(0deg, #ff00cc 0%, #333399 100%);
-  animation: spin8932 .5s infinite linear;
+  animation: spin8932 0.5s infinite linear;
 }
 
 .spinner:after {
@@ -170,67 +166,67 @@ body {
 }
 
 .titillium-web-extralight {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 200;
   font-style: normal;
 }
 
 .titillium-web-light {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 300;
   font-style: normal;
 }
 
 .titillium-web-regular {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .titillium-web-semibold {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   font-style: normal;
 }
 
 .titillium-web-bold {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 700;
   font-style: normal;
 }
 
 .titillium-web-black {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 900;
   font-style: normal;
 }
 
 .titillium-web-extralight-italic {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 200;
   font-style: italic;
 }
 
 .titillium-web-light-italic {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 300;
   font-style: italic;
 }
 
 .titillium-web-regular-italic {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
   font-style: italic;
 }
 
 .titillium-web-semibold-italic {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 600;
   font-style: italic;
 }
 
 .titillium-web-bold-italic {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 700;
   font-style: italic;
 }
@@ -240,7 +236,16 @@ body {
   width: 90%; /* Adjust the width as needed */
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
 }
+
+.search-container-focused{
+  border-color: #ffcc00;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5); 
+}
+
+
 
 
 
@@ -253,15 +258,45 @@ body {
   outline: none;
   font-size: 16px;
   background-color: transparent;
-  color: #FFFFFF; /* Text color */
+  color: #ffffff; /* Text color */
   height: 3.5rem;
   font-size: 2rem;
   /* border-bottom: 1px solid #000 */
 }
 
 .search-input::placeholder {
-  color:#FFFFFF
+  color: #ffffff;
 }
 .infinite-scroll-container {
   min-height: 100vh; /* Set a minimum height to fill the viewport */
+}
+
+.search-hints-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 7rem;
+  gap: 0.8rem;
+}
+
+.suggestions-label {
+  color: white;
+  font-weight: bold;
+}
+
+.search-hints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.search-hint-container {
+  margin: 3px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.search-hint {
+  color: white; /* Hint text color */
 }

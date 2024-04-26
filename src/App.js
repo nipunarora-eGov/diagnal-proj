@@ -15,7 +15,8 @@ const App = () => {
   const [cardData, setCardData] = useState([]);
   const [query, setQuery] = useState('');
   const [title, setTitle] = useState('Search...');
-  console.log(query);
+
+  //calling a hook to handle infinite scroll's pagination
   const { data, error, fetchNextPage, status, hasNextPage } = useInfiniteQuery(
     ['diagnal-images'],
 
@@ -31,9 +32,6 @@ const App = () => {
         const pageSizeRequested = parseInt(
           lastPage?.page?.['page-size-requested']
         );
-        const pageSizeReturned = parseInt(
-          lastPage?.page?.['page-size-returned']
-        );
         const totalCount = parseInt(lastPage?.page?.['total-content-items']);
 
         //we can calculate the total no of pages and current page then compare both
@@ -48,6 +46,7 @@ const App = () => {
     }
   );
 
+  //an effect to update the cardData state with consolidated data from multiple pages
   useEffect(() => {
     if (data) {
       setTitle(data?.pages?.[0]?.page?.title);
@@ -56,10 +55,10 @@ const App = () => {
         finalResult.push(...page.page['content-items'].content);
       });
       setCardData(() => finalResult);
-      // setFilteredData(()=>finalResult)
     }
   }, [data]);
 
+  //filter which images to render according to the query
   const filterData = (card) => {
     const searchTerm = query.toLowerCase();
     const itemValue = card.name.toLowerCase();
@@ -67,7 +66,7 @@ const App = () => {
   };
 
   const onBackButtonClick = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const handleInputChange = (e) => {
@@ -77,18 +76,18 @@ const App = () => {
   if (status === 'loading') return <Loader />;
 
   //error state
-  if (status === 'error') return <h4>Ups!, {`${error}`}</h4>;
+  if (status === 'error') return <h4>Oops!, {`${error}`}</h4>;
 
   return (
-    <div className='titillium-web-regular'>
+    <div className="titillium-web-regular">
       <Header
         onBackButtonClick={onBackButtonClick}
         handleInputChange={handleInputChange}
         defaultText={title}
+        setQuery={setQuery}
       />
 
       <div className="infinite-scroll-container">
-        {/* <h1 className="title">Diagnal Scroll</h1> */}
         {cardData?.length > 0 && (
           <InfiniteScroll
             dataLength={

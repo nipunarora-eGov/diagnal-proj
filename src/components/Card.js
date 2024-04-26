@@ -1,14 +1,16 @@
 import React from 'react';
-
-export const Card = ({ cardData }) => {
+import { Img } from './Img';
+export const Card = ({ cardData, handleError }) => {
   return (
-    <div className='card-container'>
+    <div className="card-container">
       <div className="card">
-        <img
+        <Img
           src={cardData.imageUrl}
           alt={cardData.name}
           width={50}
           loading="lazy"
+          // onError={}
+          fallback={<div>🚧 image not found 🚧</div>}
         />
       </div>
       <p>{cardData.name}</p>

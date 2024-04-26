@@ -17,7 +17,7 @@ module.exports = () => {
       historyApiFallback: {
         index: "/",
       },
-      server:"http", //Enable HTTPS
+      server:"https", //Enable HTTPS
     },
     plugins: [
       new HtmlWebpackPlugin({
