@@ -1,13 +1,14 @@
 {
+  "homepage": "http://nipunarora-egov.github.io/diagnal-proj",
   "name": "diagnal",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
-    "build:dev": "webpack --config webpack.dev.js",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d dist",
+    "build": "webpack --config webpack.dev.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build:prod": "webpack --config webpack.prod.js --mode production"
   },
   "devDependencies": {
@@ -16,6 +17,7 @@
     "@babel/preset-react": "7.12.10",
     "babel-loader": "8.2.2",
     "css-loader": "^7.0.0",
+    "gh-pages": "^6.1.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.4",
     "webpack": "^5.91.0",
