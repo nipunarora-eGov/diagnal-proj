@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Img } from './Img';
 
-const maxChar = 25
+const maxChar = 25;
 
 export const Card = ({ cardData, handleError }) => {
-  console.log(cardData.name);
+  const [isBroken, setIsBroken] = useState(false);
   return (
     <div className="card-container">
       <div className="card">
@@ -13,11 +13,29 @@ export const Card = ({ cardData, handleError }) => {
           alt={cardData.name}
           width={50}
           loading="lazy"
+          isBroken={isBroken}
+          setIsBroken={setIsBroken}
           // onError={}
-          fallback={<div>🚧 image not found 🚧</div>}
+          fallback={
+            <img
+              src={
+                'https://test.create.diagnal.com/images/placeholder_for_missing_posters.png'
+              }
+              width={50}
+              loading="lazy"
+            ></img>
+          }
         />
       </div>
-      <p className="long-text">{cardData.name.length > maxChar ? cardData.name.slice(0, maxChar) + '...': cardData.name}</p>
+      {!isBroken ? (
+        <p className="long-text">
+          {cardData.name.length > maxChar
+            ? cardData.name.slice(0, maxChar) + '...'
+            : cardData.name}
+        </p>
+      ) : (
+        <p>{'🚧 Image not found 🚧'}</p>
+      )}
     </div>
   );
 };

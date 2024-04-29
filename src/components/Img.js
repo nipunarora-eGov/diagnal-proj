@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 //This is an component to handle onError events on images
 //for example if an image url is invalid then it renders a fallback div
-export const Img = (props) => {
+export const Img = ({isBroken,setIsBroken,...props}) => {
   const { fallback = null } = props;
 
   /**
    * is our image broken?
    */
-  const [isBroken, setIsBroken] = useState(false);
+  
 
   function handleError() {
     setIsBroken(true);
