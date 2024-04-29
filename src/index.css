@@ -30,6 +30,12 @@ body {
   /* font-family: titillium-web-extralight;   */
 }
 
+.long-text {
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .search-icon {
   cursor: pointer;
   height: 2rem;
